@@ -37,4 +37,12 @@ elif answer in  negative:
             print(f"I hope you enjoy {show}! ") 
 else:
     print("Nothing wrong with spending money for fun! ")    
-    
+    answer = int(input("How much money do you feel like spending? "))
+    if money >= 30:
+        print(f"There is quite a bit you could do with {money}!")
+        want = input("You could go out to eat with a friend, take a drive, go see a movie, visit a museam and more! Which of these sound interesting to you? ")
+        if want == ["eat", "out", "friend"]:
+            print("That's a great way to socialize! Have fun!")
+        if want == "drive":
+            print("Drive's are akways great to clear your head!")
+
