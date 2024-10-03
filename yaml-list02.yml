@@ -1,0 +1,20 @@
+---
+- name: looping across a list var with "loop"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+   
+  vars:
+    my_list:
+    - "1) A hyphen represents an item on a list"
+    - "2) So the second item on the list is this"
+    - "3) Whereas this would be the third"
+    - "4) Item var is always replaced by an item from the loop list"
+          
+  tasks:
+   - name: "Learning about the debug module"
+     ansible.builtin.debug:
+       msg: "Debug module allows us to print to the screen --> {{ item }}"
+     loop: "{{ my_list }}"
+
