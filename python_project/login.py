@@ -4,6 +4,8 @@
 
 yes = ["yes", "y", "correct"]
 no = ["no", "n", "nah, dog!", "incorrect"]
+accountsread = with open(accounts.txt, "r")
+accountsappend = with open(accounts.txt, "a")
 
 def theloginscreen():
     print("   Welcome to Stefan's super cool project!\n      Please select an option below:")
@@ -18,21 +20,24 @@ def accountcreation():
         newusername = input("")
         if any(item in newusername for item in unacceptableentries):
             print("The username contained a number, symbol, or space. Please try again.")
-        elif any(item in newusername for item in unacceptableentries):
+        else:
+            any(item in newusername for item in unacceptableentries):
             print("That username is taken. Please try another.")
-        elif usernamecount == 3:
+        if usernamecount == 3:
             print("Please try again later")
         else:
             email = input("Enter your preferred email: ")
-            emailverification = input(f'Is {email} correct? ') 
-            if emailverification == yes:
+            emailverification = input(f'Is {email} correct? ')
+            if email != "":
+                emailverification1 = yes
+            if emailverification1 == yes:
                 passwordcount = 0
                 while true:
                     passwordcount = passwordcount + 1
                     password = input("Enter your preferred password: ")
                     if password == "":
                         print("You must enter a password.")
-                    elif passwordcount == 3:
+                    if passwordcount == 3:
                         print("Please try again once you have decided on a password.\n Goodbye!") 
                     else:
                         password2 = input("Re-enter your password: ")
