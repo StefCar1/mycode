@@ -7,7 +7,7 @@ no = ["no", "n", "nah, dog!", "incorrect"]
 
 def theloginscreen():
     bitchindragon()
-    print("      Please select an option below:")
+    print("                       Please select an option below:")
     print("1. Enter Username.\n2. Create a user account.\n3. Exit.")
 
 def accountcreation():
@@ -77,7 +77,7 @@ def accountcreation():
         return
 
 def bitchindragon():
-    print("\n"*10)
+    print("\n"*25)
     print(r"""                                   <`--._<`--.____________________________ 
                                      ) ,..-) ,..------------------------,-' 
                                    ,','  >','  \\                  ,        
@@ -88,8 +88,8 @@ def bitchindragon():
                            /  /,-/  /,--------------\/                      
                           /__'--/  (/--.                                    
           .-.     ____, '<.  / '   '   '----.                                
-         ( . `. ,'    \  '     .-------.  ` '--,                             
-          \_) ,'  (_.  \      /         `-----<\\                             
+         ( . `. ,'    \  '                 ` '--,                             
+          \_) ,'  (_.  \      /                \\                             
           \'   ,'', `.  \   ,'                 `\\                            
          _/ _/',O)>   )  )_            ,'        >                          
      \\  (o /o) \` )  /  /'\\`   `------<___   ,   )                          
@@ -98,8 +98,8 @@ def bitchindragon():
            / ,//\\  \\   `.    `          ' ,'`.   '\\                        
          (^^(//\     \\    `-\\   ` --------' ,' `.   )                       
           ``` ________>  ,'  \\     .        |    \\   \\                       
-     ,-------'        `  )   /               |     \\   \\_                     
-   ,'/ _,--,--,,,-,______>   )     \\,    (_. \\     \\   ),---.               
+     ,-------'        `  )   /               \     \\   \\_                     
+   ,'/ _,--,--,,,-,______>   )     \\,        \\     \\   ),---.               
   / ,\\ )                   ,'     ,'          \\ .--.\\,  .__, \\-.            
  /_/ /\\)                  /      /             / )-.    /--`--) \\           
 ( )\\ ) `                 .      /             (-'   `--'      `--)          
@@ -121,64 +121,82 @@ def bitchindragon():
 
 
 def account_retrieval():
-    email_info = input("What is the email associated with your account? ")
+    email_info = input("What is the email associated with your account? ").strip()
+
+    # Open accounts.txt to check for the email
+    with open("accounts.txt", "r") as accounts:
+        account_lines = [line.strip().split(":") for line in accounts.readlines()]
+        user_account = next((x for x in account_lines if x[1].split(" | ")[1] == email_info), None)
+
+    if user_account:  # Email found
+        print(f"An email containing your username ({user_account[0]}) has been sent!")
+    else:
+        print("Email not found. Please try again.")
+    main()  # Return to main menu after email check
+
     
+def login():
+    """Handles the login process"""
+    logincount = 0
+    max_attempts = 3
+
+    while logincount < max_attempts:
+        name = input("Username: ").strip()
+
+        # Open accounts.txt to check for username
+        with open("accounts.txt", "r") as accounts:
+            account_lines = [line.strip().split(":") for line in accounts.readlines()]
+            user_account = next((u for u in account_lines if u[0] == name), None)
+
+        if user_account:  # Username found
+            bitchindragon()
+            password = input("Password: ").strip()
+
+            # Check if password matches
+            if password == user_account[1].split(" | ")[0]:
+                print("\nYou have successfully logged in.\n")
+                return True  # Successful login, exit login process
+            else:
+                print("Incorrect password. Try again.")
+                logincount += 1
+        else:
+            bitchindragon()
+            print("Username not found. Try again.")
+            logincount += 1
+
+        if logincount >= max_attempts:
+            account_retrieve_answer = input("Maximum login attmepts reached. Would you like to request your username via email? ")
+            if account_retrieve_answer == "yes":
+                account_retrieval()
+            else:
+                main()
+
+
 def main():
     bitchindragon()
     theloginscreen()
-    logincount = 0
-    max_attempts = 3  # Define the maximum number of login attempts
 
-    while logincount < max_attempts:
+    while True:
         loganswer = input("Choose option 1, 2, or 3: ").strip()
 
         if loganswer == "1":  # Login option
-            bitchindragon()
-            print("\n" * 3)
-            name = input("Username: ").strip()
-
-            with open("accounts.txt", "r") as accounts:
-                account_lines = [line.strip().split(":") for line in accounts.readlines()]
-                user_account = next((u for u in account_lines if u[0] == name), None)
-
-            if user_account:  # If username exists
-                bitchindragon()
-                print("\n" * 2)
-                print(f"Welcome, {name}!")
-                logpassword = input("Password: ").strip()
-
-                # Check if the password matches
-                if logpassword == user_account[1].split(" | ")[0]:
-                    bitchindragon()
-                    print("\n")
-                    print("You have successfully logged in.")
-                    return  # Exit the function after successful login
-                else:
-                    print("Incorrect password. Try again.")
-                    logincount += 1  # Increment attempts after incorrect password
+            success = login()  # Call the login function
+            if success:
+                break  # Exit if login is successful
             else:
-                print("Username not found. Try again.")
-                logincount += 1  # Increment attempts after incorrect username
-
-            # Check if login attempts have been exceeded
-            if logincount >= max_attempts:
-                print("You've reached the maximum login attempts!")
-                break  # Exit the loop after maximum attempts
+                break  # Exit after failed login attempts
 
         elif loganswer == "2":  # Create account option
             print("You selected: Create a user account")
             accountcreation()
-            return  # Exit after account creation
+            break  # Exit after account creation
 
         elif loganswer == "3":  # Exit option
             print("Exiting the program.")
-            return  # Exit the program
+            break  # Exit the program
 
         else:  # Invalid input handling
             print("Invalid option. Please try again.")
-    
-    # If max attempts are exceeded, end the program
-    print("Exiting due to too many failed login attempts.")
 
 # Make sure the script runs only when executed directly
 if __name__ == "__main__":
