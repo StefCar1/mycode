@@ -2,3 +2,5 @@
 bob:robert | bob@hotmail.com
 stefan:stefan | stefan@stefan.com
 timmothy:timmothy | timmothy@timmothy.com
+clarice:clarice | clarice@email.com
+bart:bart | bart@email.com

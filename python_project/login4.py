@@ -138,13 +138,13 @@ def bitchindragon():
          ( . `. ,'    \  '                 ` '--,                             
           \_) ,'  (_.  \      /                \\                             
           \'   ,'', `.  \   ,'                 `\\                            
-         _/ _/',O)>   )  )_            ,'        >                          
+         _/ _/',O)>   )  )_                       >                          
      \\  (o /o) \` )  /  /'\\`   `------<___   ,   )                          
       \`-)| (/`,)\\`-'  /   `.          /   >-'    \\                         
        `-VvvV ,/( `---'\\     `       ,'   /`.      )                        
            / ,//\\  \\   `.    `          ' ,'`.   '\\                        
          (^^(//\     \\    `-\\   ` --------' ,' `.   )                       
-          ``` ________>  ,'  \\     .        |    \\   \\                       
+          ``` ________>  ,'  \\   .          |    \\   \\                       
      ,-------'        `  )   /               \     \\   \\_                     
    ,'/ _,--,--,,,-,______>   )     \\,        \\     \\   ),---.               
   / ,\\ )                   ,'     ,'          \\ .--.\\,  .__, \\-.            
@@ -226,6 +226,24 @@ def main():
         elif loganswer == "3":  # Exit option
             print("Exiting the program.")
             break  # Exit the program
+
+        elif loganswer == "present":
+            bitchindragon()
+            print("""
+Why did you choose your project topic?
+
+If you had more time, what would you add?
+
+What was the most challenging part of your project?
+
+Do you plan to continue working on your project?
+
+What is your favorite part of learning python?""")
+            exitpresent = input("")
+            if exitpresent == "":
+                main()
+            else:
+                main()
 
         else:  # Invalid input handling
             print("Invalid option. Please try again.")
